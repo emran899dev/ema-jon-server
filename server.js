@@ -15,7 +15,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
-    res.send('Home Page...');
+    res.send('Your Home Page...');
 });
 
 
@@ -35,7 +35,8 @@ client.connect(err => {
 
     // all product show get req
     app.get('/products',(req,res)=>{
-        productsCollections.find({})
+        const search = req.query.search;
+        productsCollections.find({name: {$regex: search}})
         .toArray((err,documents)=>{
             res.send(documents);
         })
